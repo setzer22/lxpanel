@@ -47,8 +47,8 @@ Makefile
 *.la
 *.a
 .[A-Za-z]*
-src/lxpanel
-src/lxpanelctl
+lxpanel/lxpanel
+lxpanel/lxpanelctl
 stamp-h1
 man/*.1
 debian/files
