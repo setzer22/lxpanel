@@ -24,6 +24,7 @@ LT_PREREQ([2.2])
 LT_INIT
 
 # Checks for libraries.
+AC_SEARCH_LIBS([log], [m])
 AC_ARG_ENABLE(gtk3,
 AC_HELP_STRING([--enable-gtk3],[enable to use gtk-3.0 instead of gtk-2.0]),
 [case "${enableval}" in
@@ -160,14 +161,6 @@ dnl FIXME: filter for undefined symbols in plugins
 # there are no undefined references.  However, we intend not to
 # fix at the moment since we don't have spin-off libraray containing
 # the necessary functions.
-if test ! -z "$LDFLAGS"; then
-    LDFLAGS=`echo "$LDFLAGS" | sed -e 's/-Wl,-z,defs//'`
-fi
-
-LXPANEL_MODULE="-avoid-version \
--rpath \$(libdir)/lxpanel/plugins \
--no-undefined "'-export-symbols-regex "^[[^_]].*"'
-AC_SUBST(LXPANEL_MODULE)
 
 AC_ARG_ENABLE([alsa],
     AS_HELP_STRING([--disable-alsa],
