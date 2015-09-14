@@ -850,6 +850,7 @@ static void _panel_update_background(LXPanel * p, gboolean enforce)
 
 #define GAP 2
 #define PERIOD 100
+#define SHOW_PERIOD 400
 
 typedef enum
 {
@@ -922,6 +923,16 @@ static gboolean ah_state_hide_timeout(gpointer p)
     return FALSE;
 }
 
+static gboolean ah_state_show_timeout(gpointer p)
+{
+    if (!g_source_is_destroyed(g_main_current_source()))
+    {
+        ah_state_set(p, AH_STATE_VISIBLE);
+        ((LXPanel *)p)->priv->show_timeout = 0;
+    }
+    return FALSE;
+}
+
 static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
 {
     Panel *p = panel->priv;
@@ -963,6 +974,7 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
             /* configurator might change height_when_hidden value */
             if (p->height_when_hidden > 0)
             {
+                //HERE
                 if (gtk_widget_get_visible(p->box))
                 {
                     gtk_widget_hide(p->box);
@@ -986,7 +998,8 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
             p->hide_timeout = 0;
             /* continue with setting visible */
         case AH_STATE_HIDDEN:
-            ah_state_set(panel, AH_STATE_VISIBLE);
+            if (!p->show_timeout)
+                p->show_timeout = g_timeout_add(2 * SHOW_PERIOD, ah_state_show_timeout, panel);
         }
     }
     RET();

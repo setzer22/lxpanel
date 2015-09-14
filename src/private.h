@@ -111,6 +111,7 @@ struct _Panel {
     guint autohide : 1;
     guint visible : 1;
     int height_when_hidden;
+    guint show_timeout;
     guint hide_timeout;
     int icon_size;			/* Icon size */
 
