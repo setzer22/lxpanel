@@ -939,6 +939,8 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
     Panel *p = panel->priv;
     GdkRectangle rect;
 
+    g_printf("%d", ah_state);
+
     ENTER;
     if (p->ah_state != ah_state) { //State has changed
         p->ah_state = ah_state;
@@ -981,7 +983,6 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
             /* configurator might change height_when_hidden value */
             if (p->height_when_hidden > 0)
             {
-                //HERE
                 if (gtk_widget_get_visible(p->box))
                 {
                     gtk_widget_hide(p->box);
@@ -1012,7 +1013,7 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
             p->hide_timeout = 0;
             /* continue with setting visible */
         case AH_STATE_HIDDEN:
-            ah_state_set(AH_STATE_WAITING_FOR_SHOW);
+            ah_state_set(panel, AH_STATE_WAITING_FOR_SHOW);
             break;
         case AH_STATE_WAITING_FOR_SHOW: 
             break;
