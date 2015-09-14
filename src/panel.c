@@ -939,8 +939,6 @@ static void ah_state_set(LXPanel *panel, PanelAHState ah_state)
     Panel *p = panel->priv;
     GdkRectangle rect;
 
-    g_printf("%d", ah_state);
-
     ENTER;
     if (p->ah_state != ah_state) { //State has changed
         p->ah_state = ah_state;
