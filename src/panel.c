@@ -849,7 +849,7 @@ static void _panel_update_background(LXPanel * p, gboolean enforce)
  */
 
 #define GAP 2
-#define PERIOD 300
+#define PERIOD 100
 
 typedef enum
 {
